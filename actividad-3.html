@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Actividad 3</title>
+    <style>
+      html {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #222;
+        color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ejercicios Actividad 3</h1>
+    <h2>Conversor de dolares a pesos</h2>
+    <img
+      src="https://jonmircha.com/assets/libro/diagrama-conversor-dolares-pesos.svg"
+      alt="Diagrama conversor de dolares y pesos"
+    />
+    <script>
+      const TIPO_CAMBIO = 17.65;
+
+      let opcion = prompt(
+        "Elige una opción:\n1. Dolares a Pesos\n2. Pesos a Dolares",
+      );
+
+      if (opcion === "1") {
+        let dolares = prompt("Ingresa cantidad de dolares 🤑");
+        let conversion = (parseFloat(dolares) * TIPO_CAMBIO).toFixed(2);
+        alert(`Resultado $${conversion} MXN`);
+      } else if (opcion === "2") {
+        let pesos = prompt("Ingresa cantidad de pesos 🤑");
+        let conversion = (parseFloat(pesos) / TIPO_CAMBIO).toFixed(2);
+        alert(`Resultado $${conversion} USD`);
+      } else {
+        alert("Opción invalida");
+      }
+    </script>
+    <h2>Algoritmo Bubble Sort</h2>
+    <img
+      src="https://jonmircha.com/assets/libro/diagrama-algoritmo-bubble-sort.svg"
+      alt="Diagrama algoritmo Bubble Sort"
+    />
+    <script>
+      function bubbleSort(arr) {
+        let n = arr.length;
+        for (let i = 0; i < n - 1; i++) {
+          for (let j = 0; j < n - 1 - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+              let temporal = arr[j];
+              arr[j] = arr[j + 1];
+              arr[j + 1] = temporal;
+            } //if
+          } // for j
+        } // for i
+
+        return arr;
+      }
+
+      let numeros = [5, 3, 8, 1, 9];
+      console.log("Ordenados", bubbleSort(numeros));
+    </script>
+  </body>
+</html>
