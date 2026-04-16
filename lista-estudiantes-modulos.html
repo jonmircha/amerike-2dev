@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Lista de Estudiantes y promedio</h1>
+    <script>
+      // ========== MÓDULO DE DATOS ==========
+
+      function crearEstudiante(nombre, calificacion) {
+        return { nombre, calificacion };
+      }
+
+      function agregarEstudiante(lista, estudiante) {
+        lista.push(estudiante);
+        return lista;
+      }
+
+      // ========== MÓDULO DE CÁLCULO ==========
+
+      function calcularPromedio(lista) {
+        if (lista.length === 0) return 0;
+        const suma = lista.reduce((acc, e) => acc + e.calificacion, 0);
+        return suma / lista.length;
+      }
+
+      // ========== MÓDULO DE PRESENTACIÓN ==========
+
+      function mostrarReporte(lista, promedio) {
+        console.log("========== REPORTE DEL GRUPO ==========");
+        lista.forEach((e) => console.log(`${e.nombre} - ${e.calificacion}`));
+        console.log("----------------------------------------");
+        console.log(`Promedio del grupo: ${promedio.toFixed(1)}`);
+        console.log("========================================");
+      }
+
+      // ========== PROGRAMA PRINCIPAL ==========
+
+      let lista = [];
+      lista = agregarEstudiante(lista, crearEstudiante("Ana Torres", 9.2));
+      lista = agregarEstudiante(lista, crearEstudiante("Carlos Ruiz", 7.5));
+      lista = agregarEstudiante(lista, crearEstudiante("Diana López", 8.8));
+      lista = agregarEstudiante(lista, crearEstudiante("Eduardo Mora", 6.4));
+
+      const promedio = calcularPromedio(lista);
+      mostrarReporte(lista, promedio);
+    </script>
+  </body>
+</html>

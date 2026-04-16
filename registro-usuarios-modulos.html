@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Registro de usuarios por módulos</h1>
+    <script>
+      // ========== MÓDULO DE VALIDACIÓN ==========
+      function validarNombre(nombre) {
+        return nombre !== "";
+      }
+
+      // Arrow Function
+      //const validarNombre = (nombre) => nombre !== "";
+
+      function validarCorreo(correo) {
+        return correo.includes("@") && correo.includes(".");
+      }
+
+      function validarContrasena(contrasena) {
+        return contrasena.length >= 8;
+      }
+
+      // ========== MÓDULO DE ALMACENAMIENTO ==========
+
+      function guardarUsuario(nombre, correo, contrasena) {
+        // lógica de persistencia
+        console.log("Usuario guardado en base de datos");
+      }
+
+      // ========== MÓDULO DE PRESENTACIÓN ==========
+
+      function mostrarErrorValidacion(campo, mensaje) {
+        console.log(`Error en ${campo}: ${mensaje}`);
+      }
+
+      function mostrarExito() {
+        console.log("Usuario registrado correctamente");
+      }
+
+      // ========== PROGRAMA PRINCIPAL ==========
+
+      function registrarUsuario(nombre, correo, contrasena) {
+        if (!validarNombre(nombre)) {
+          mostrarErrorValidacion("nombre", "es obligatorio");
+          return;
+        }
+        if (!validarCorreo(correo)) {
+          mostrarErrorValidacion("correo", "formato inválido");
+          return;
+        }
+        if (!validarContrasena(contrasena)) {
+          mostrarErrorValidacion("contraseña", "mínimo 8 caracteres");
+          return;
+        }
+        guardarUsuario(nombre, correo, contrasena);
+        mostrarExito();
+      }
+
+      registrarUsuario("Jon", "jonmircha@gmail.com", "qwerty123");
+    </script>
+  </body>
+</html>

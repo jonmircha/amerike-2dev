@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Inventario de Productos</h1>
+    <script>
+      // ========== MÓDULO DE VALIDACIONES ==========
+
+      const validarNombre = (nombre) => nombre !== "";
+      const validarPrecio = (precio) => precio > 0;
+      const validarStock = (stock) => stock >= 0;
+      const validarProducto = (n, p, s) =>
+        validarNombre(n) && validarPrecio(p) && validarStock(s);
+
+      // ========== MÓDULO DE DATOS ==========
+
+      function crearProducto(nombre, precio, stock) {
+        return { nombre, precio, stock };
+      }
+
+      function agregarProducto(inventario, producto) {
+        inventario.push(producto);
+        return inventario;
+      }
+
+      function actualizarStock(inventario, nombre, nuevoStock) {
+        const producto = inventario.find((p) => p.nombre === nombre);
+        if (producto) {
+          producto.stock = nuevoStock;
+          return true;
+        }
+        return false;
+      }
+
+      // ========== MÓDULO DE CÁLCULOS ==========
+
+      function calcularValorTotal(inventario) {
+        return inventario.reduce((total, p) => total + p.precio * p.stock, 0);
+      }
+
+      function obtenerStockBajo(inventario, limite) {
+        return inventario.filter((p) => p.stock < limite);
+      }
+
+      // ========== MÓDULO DE PRESENTACIÓN ==========
+
+      function mostrarProducto(p) {
+        console.log(
+          `${p.nombre} | Precio: $${p.precio} | Stock: ${p.stock} | Valor: $${p.precio * p.stock}`,
+        );
+      }
+
+      function mostrarReporte(inventario, valorTotal, stockBajo) {
+        console.log("========== INVENTARIO ==========");
+        inventario.forEach(mostrarProducto);
+        console.log("--------------------------------");
+        console.log(`Valor total del inventario: $${valorTotal}`);
+        if (stockBajo.length > 0) {
+          console.log("--------------------------------");
+          console.log("Productos con stock bajo:");
+          stockBajo.forEach((p) =>
+            console.log(`  ! ${p.nombre} (stock: ${p.stock})`),
+          );
+        }
+        console.log("================================");
+      }
+
+      function mostrarErrorProducto(nombre) {
+        console.log(
+          `Error: datos inválidos para el producto '${nombre}'. No se registró.`,
+        );
+      }
+
+      // ========== PROGRAMA PRINCIPAL ==========
+
+      const LIMITE_STOCK_BAJO = 5;
+
+      function registrarProducto(inventario, nombre, precio, stock) {
+        if (validarProducto(nombre, precio, stock)) {
+          return agregarProducto(
+            inventario,
+            crearProducto(nombre, precio, stock),
+          );
+        }
+        mostrarErrorProducto(nombre);
+        return inventario;
+      }
+
+      let inventario = [];
+      inventario = registrarProducto(inventario, "Teclado", 850, 12);
+      inventario = registrarProducto(inventario, "Monitor", 4500, 3);
+      inventario = registrarProducto(inventario, "Mouse", 350, 8);
+      inventario = registrarProducto(inventario, "Auriculares", 600, 4);
+      inventario = registrarProducto(inventario, "", 200, 5); // inválido
+      inventario = registrarProducto(inventario, "Webcam", -100, 6); // inválido
+
+      actualizarStock(inventario, "Mouse", 2);
+      const valorTotal = calcularValorTotal(inventario);
+      const stockBajo = obtenerStockBajo(inventario, LIMITE_STOCK_BAJO);
+      mostrarReporte(inventario, valorTotal, stockBajo);
+    </script>
+  </body>
+</html>
