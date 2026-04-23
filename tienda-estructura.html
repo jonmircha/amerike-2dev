@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Tienda</h1>
+    <script>
+      const EstadoPedido = Object.freeze({
+        PENDIENTE: "PENDIENTE",
+        EN_PREPARACION: "EN_PREPARACION",
+        DESPACHADO: "DESPACHADO",
+      });
+
+      function crearPedido(id, productos) {
+        return { id, productos, estado: EstadoPedido.PENDIENTE };
+      }
+
+      function procesarSiguiente(cola, despachados) {
+        if (cola.length === 0) {
+          console.log("No hay pedidos pendientes.");
+          return;
+        }
+        const pedido = cola.shift();
+        pedido.estado = EstadoPedido.EN_PREPARACION;
+        console.log(
+          `Preparando pedido ${pedido.id}: [${pedido.productos.join(", ")}]`,
+        );
+        pedido.estado = EstadoPedido.DESPACHADO;
+        despachados.push(pedido);
+        console.log(`Pedido ${pedido.id} despachado.`);
+        console.log(`Pedidos pendientes: ${cola.length}`);
+      }
+
+      const cola = [];
+      const despachados = [];
+
+      cola.push(crearPedido("P001", ["tacos x3", "refresco"]));
+      cola.push(crearPedido("P002", ["hamburguesa", "papas", "agua"]));
+      cola.push(crearPedido("P003", ["pizza personal"]));
+
+      console.log("Pedidos en cola:", cola.length);
+      procesarSiguiente(cola, despachados);
+      procesarSiguiente(cola, despachados);
+      procesarSiguiente(cola, despachados);
+      procesarSiguiente(cola, despachados); // cola vacía
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Biblioteca</h1>
+    <script>
+      function registrarLibro(biblioteca, titulo, autor) {
+        biblioteca[titulo] = { autor, disponible: true };
+        console.log(`Libro registrado: '${titulo}'`);
+      }
+
+      function prestarLibro(biblioteca, titulo) {
+        if (!(titulo in biblioteca)) {
+          console.log("Error: libro no encontrado");
+          return;
+        }
+        if (!biblioteca[titulo].disponible) {
+          console.log(`Error: '${titulo}' ya está prestado`);
+          return;
+        }
+        biblioteca[titulo].disponible = false;
+        console.log(`'${titulo}' prestado correctamente`);
+      }
+
+      function devolverLibro(biblioteca, titulo) {
+        if (!(titulo in biblioteca)) {
+          console.log("Error: libro no encontrado");
+          return;
+        }
+        biblioteca[titulo].disponible = true;
+        console.log(`'${titulo}' devuelto correctamente`);
+      }
+
+      function mostrarDisponibles(biblioteca) {
+        console.log("Libros disponibles:");
+        for (const [titulo, datos] of Object.entries(biblioteca)) {
+          if (datos.disponible) {
+            console.log(`  - ${titulo} (${datos.autor})`);
+          }
+        }
+      }
+
+      const biblioteca = {};
+      registrarLibro(
+        biblioteca,
+        "Cien años de soledad",
+        "Gabriel García Márquez",
+      );
+      registrarLibro(biblioteca, "1984", "George Orwell");
+      registrarLibro(biblioteca, "El principito", "Antoine de Saint-Exupéry");
+
+      prestarLibro(biblioteca, "1984");
+      prestarLibro(biblioteca, "1984"); // ya prestado
+
+      mostrarDisponibles(biblioteca);
+
+      devolverLibro(biblioteca, "1984");
+      mostrarDisponibles(biblioteca);
+    </script>
+  </body>
+</html>
